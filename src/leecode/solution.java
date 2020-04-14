@@ -1,6 +1,7 @@
 package leecode;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.print.attribute.standard.PrinterLocation;
@@ -58,11 +59,16 @@ public class solution {
 		原因：342 + 465 = 807
 	 */
 	
-	//内部类 表示链接电费
+	
 		
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+		
+//		已ACE，但是效率很低，时间7%，内存93%。 写的很烂，
 		//这个题关键点在于进位处理，有一个标志位记录是否进位，从低位到高位依次相加。
-		ListNode l3 = l1,l4 =l2,l5 = null,l6 =l5;
+//		java中没有指针的概念，所以l5 =l6 就是引用同一个对象，此时再遍历谁都是ok的。但是需要用到next域，
+//		不能是null对象，所以最好使用赋值初始化之后的变量遍历，遍历使用next去链接第一个节点，最后返回next域
+		ListNode l3 = l1,l4 =l2,l5 = new ListNode(0);
+		ListNode l6 = l5; 
 		int len1 = 0 ,len2 = 0;
 		int lflag = 0,rflag=0,value=0;//进位表示1,value代表两数之和
 		
@@ -74,7 +80,7 @@ public class solution {
 			len2++;
 			l4 = l4.next;
 		}
-		for(int i =0;i < Math.max(len1, len2);i++){
+		for(int i =0;i <= Math.max(len1, len2);i++){
 			if(l1 == null){ //如果遍历到尾部
 				l1 = new ListNode(0);
 			}
@@ -83,18 +89,21 @@ public class solution {
 			}
 			value = l1.val + l2.val;
 			
-			if(value >= 10 ){
+			if(value+lflag >= 10 ){
 				value = value -10;
 				rflag = 1;
 			}else{
 				rflag = 0;
 			}
+			if(i == Math.max(len1, len2) && value+lflag == 0){
+				break; //最后如果是0，空转一圈。不创建0 node
+			}
 			ListNode l = new ListNode(value+lflag);
-//			System.out.println(value+lflag);
-			l5 =l;l5 = l5.next;
+			System.out.println(value+lflag);
+			l5.next =l;l5 = l5.next;
 			l1 = l1.next;l2 = l2.next;lflag = rflag;
 		}
-		return l6;
+		return l6.next;
 
     }
 	

@@ -26,18 +26,19 @@ public class Main {
 		      ListNode next;
 		      ListNode(int x) { val = x; next = null;} //构造函数
 		}*/
-		 ListNode l11 = new ListNode(2);
-		 ListNode l12 = new ListNode(4);l11.next =l12;
-		 ListNode l13 = new ListNode(3);l12.next =l13;
+		 ListNode l11 = new ListNode(1);
+		 /*ListNode l12 = new ListNode(4);l11.next =l12;
+		 ListNode l13 = new ListNode(3);l12.next =l13;*/
 		 
-		 ListNode l21 = new ListNode(5);
-		 ListNode l22 = new ListNode(6);l21.next = l22;
-		 ListNode l23 = new ListNode(4);l22.next = l23;
-		 ListNode l24 = new ListNode(1);l23.next = l24;
+		 ListNode l21 = new ListNode(9);
+		 ListNode l22 = new ListNode(9);l21.next = l22;
+	/*	 ListNode l23 = new ListNode(4);l22.next = l23;
+		 ListNode l24 = new ListNode(1);l23.next = l24;*/
 		 solution solu =new solution(); 
 		 ListNode l6 = solu.addTwoNumbers(l11, l21);
 		 while(l6 != null){
 			 System.out.println("value is "+ l6.val);
+			 l6 = l6.next;
 		 }
 	}
 
