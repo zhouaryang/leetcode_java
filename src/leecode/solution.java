@@ -1,8 +1,10 @@
 package leecode;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.print.attribute.standard.PrinterLocation;
 
@@ -106,8 +108,57 @@ public class solution {
 		return l6.next;
 
     }
-	
-	
+	public ListNode addTwoNum(ListNode l1 ,ListNode l2){
+//		比我处理的优雅好多。time 99 room 94 
+//		1. 最后多一个进位可以不用放在循环里面，因为只有一个。
+//		2. 利用% / 来判断商和余数，比我和10比大小优雅多了
+//		3. 使用while循环则不需要计算length,
+		ListNode head = new ListNode(0);
+		ListNode p = l1,q = l2, curr = head;
+		int carry = 0;
+		while(p != null || q != null){
+			int x = (p != null) ? p.val:0;
+			int y = (q != null) ? q.val:0;
+			int sum = carry + x +y;
+			carry = sum / 10;
+			curr.next = new ListNode(sum % 10);
+			curr = curr.next;
+			if (p!= null) p = p.next;
+			if (q!= null) q = q.next;
+			
+		}
+		if (carry > 0){
+			curr.next = new ListNode(carry);
+		}
+		return head.next;
+		
+	}
+	/* No.3
+	 * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+	 * example:
+	 * "abcabcbb" 3 
+	 * "bbbbb" 1
+	 * "pwwkew" 3 
+	 */
+//	O(n^3)暴力法，不优雅，而且超时。
+	 public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int ans = 0;
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j <= n; j++)
+                if (allUnique(s, i, j)) ans = Math.max(ans, j - i);
+        return ans;
+    }
+
+    public boolean allUnique(String s, int start, int end) {
+        Set<Character> set = new HashSet<>();
+        for (int i = start; i < end; i++) {
+            Character ch = s.charAt(i);
+            if (set.contains(ch)) return false;
+            set.add(ch);
+        }
+        return true;
+    }
 }
 class ListNode {
     int val;
