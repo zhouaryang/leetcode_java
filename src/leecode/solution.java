@@ -1,5 +1,6 @@
 package leecode;
 
+import java.util.FormatFlagsConversionMismatchException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -141,7 +142,7 @@ public class solution {
 	 * "pwwkew" 3 
 	 */
 //	O(n^3)暴力法，不优雅，而且超时。
-	 public int lengthOfLongestSubstring(String s) {
+	 public int lengthOfLongestSubstring2(String s) {
         int n = s.length();
         int ans = 0;
         for (int i = 0; i < n; i++)
@@ -159,6 +160,60 @@ public class solution {
         }
         return true;
     }
+//    滑动窗口法：滑动窗口正好是数组/字符串问题中常用的抽象概念，[i,j),
+//    我们使用hashset做滑动窗口，查找快，期初[i,j)为0，然后j后移，判断s[j]是否在hashset中，如果不在继续移动j
+//    如果存在则此时[i,j)正好是当前最大子串，此时可以移动i,hashset只需剔除s[i]元素,j保持不动，一次遍历即可
+//    time 29 root 5 感觉数据不很好啊 最后把 set.size()改成j-i 后变成了 time 76 room 5
+    public int lengthOfLongestSubstring(String s) {
+    	Set<Character> set = new HashSet<>();
+    	int ans = 0;
+    	int len = s.length();
+    	int i =0 ,j=0;
+    	while( i < len && j <len){
+    		if(!set.contains(s.charAt(j))){
+    			set.add(s.charAt(j));
+    			j++;
+    		}else{
+    			set.remove(s.charAt(i));
+    			i++;
+    		}
+    		ans = Math.max(ans, j-i);
+    	}
+    	return ans;
+    }
+    /*
+     * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
+     * In:132 Out:321
+     * In:-123 Out:-321
+     * In:120 Out:21
+     */
+    public int reverse(int x) {
+//    	实现比较烂 time 23 room 5,使用了stringBuffer做反转，应用了其append方法。
+//    	位数，符号，末尾0是三个关键点
+    	int len = 1,val = x ;
+    	while(x/10 != 0 ){
+    		x = x/10;
+    		len++;
+    	}
+    	boolean flag = val > 0 ? true:false; 
+    	if(!flag)val = -val;
+    	String s = Integer.toString(val);
+    	StringBuffer reString = new StringBuffer();
+    	for(int i=s.length()-1;i>=0;i--) reString.append(s.charAt(i));
+    	try{
+    		int result =Integer.parseInt(reString.toString());
+    		result = flag?result:-1*result;
+        	return result;
+    	}catch(NumberFormatException e){ //这里int溢出之后返回0
+    		return 0;
+    	}
+    	
+    }
+    public int reverse2(int x){
+    	
+    	return x;
+    }
+    
 }
 class ListNode {
     int val;
