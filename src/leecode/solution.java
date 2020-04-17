@@ -1,10 +1,14 @@
 package leecode;
 
+import java.beans.IntrospectionException;
+import java.security.Key;
 import java.util.FormatFlagsConversionMismatchException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.print.attribute.standard.PrinterLocation;
@@ -181,7 +185,7 @@ public class solution {
     	}
     	return ans;
     }
-    /*
+    /*No.7
      * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
      * In:132 Out:321
      * In:-123 Out:-321
@@ -209,14 +213,116 @@ public class solution {
     	}
     	
     }
+    
     public int reverse2(int x){
+    	//用hashmap试试，K-V存 位数，值，快速查找
+//    	time 15 room 5 感觉还不如上个
+    	Map<Integer,Integer> map = new HashMap<>();
+    	int i = 1; // 从1开始，去除最末尾
+    	int result = 0;//取最末尾
+    	while(x/10 != 0){
+    		map.put(i, x%10);
+    		i++;
+    		x = x/10;
+    	}
+    	map.put(i, x%10); //最高位加进来
     	
-    	return x;
+    	
+    	for(Integer key :map.keySet()){
+    		
+    		if(result >= Integer.MAX_VALUE ||result <= Integer.MIN_VALUE){
+    			return 0;
+    		}
+    		result += map.get(key)*Math.pow(10, i-(key));
+    		/*try{
+        		result += map.get(key)*Math.pow(10, i-(key));
+        	}catch(NumberFormatException e){
+        		return 0;
+        	}*/
+    	}
+//    	恶心，测试边界点
+    	System.out.println("int max :"+Integer.MAX_VALUE + " int min:"+Integer.MIN_VALUE);
+    	return result;
+    	
+    }
+    public int reverse3(int x){
+//    	time 100 room 5  因为用了long,所以空间大了
+    	int ans = 0; //判断int溢出用，如果是int，判断不了是否溢出
+    	
+    	while(x /10 != 0 || x%10 != 0){
+    		ans = ans*10 + (x%10);
+    		x /= 10;
+    	}
+    	if(ans >= Integer.MAX_VALUE || ans <= Integer.MIN_VALUE){
+    		return 0;
+    	}
+    	return (int)ans;
+    }
+//    bytedance 1
+    public int findLoaction(char []ch,String s){
+    	
+    	Map<Character, Integer> map = new  HashMap<>();
+    	for(char c:ch){ //先全部放到map中
+    		map.put(c, 0);
+    	}
+    	int i = 0, j = 0;
+    	boolean flag =true;
+    	while(i < s.length() && j <s.length() ){ //
+    		char key = s.charAt(j);
+    		
+    		if(map.containsKey(key) && map.get(key)==0){ //如果存在且为0，则移动窗口
+    			j++;
+    			map.put(key, 1);//添加记录。
+    		}else{
+    			i ++;
+    			for(Entry<Character, Integer> entry : map.entrySet()){
+    				if(entry.getValue() == 0){
+    					flag = false;
+    				}
+    				if(entry.getValue() == 1){
+    					map.put(entry.getKey(), 0);
+    				}
+    			}
+    		}
+    		if(flag){
+    			return i;
+    		}
+    	}
+    	
+    	return 0;
     }
     
+    /*No.9 
+     * 判断一个整数是否是回文数，回文数是指正序（从左到右）和倒序读都是一样的数
+     * 例如：121 true ; -121 false 10 false 
+     * 不要转为String来处理
+     */
+    public Boolean isPalindrome(int x){
+//    	time 26 room 5 感觉还是挺
+    	if(x < 0){
+    		return false;
+    	}
+    	int val = x , y = 0;
+    	while(val /10 != 0 || val %10 != 0){
+    		y = y*10 + val%10;
+    		val /= 10;
+    	}
+    	/*if(x != y){
+    		return false;
+    	}
+    	return true;*/
+    	return x==y ;
+    }
+//    转String 试试
+//    其中StringBuilder 提供了多种操作方法，append reverse等，最后通过toString转string
+//    time 9 room 5
+    public Boolean isPalindrome2(int x){
+    	StringBuilder s1 = new StringBuilder(x+"");
+    	return s1.reverse().toString().equals(x+"");
+    }
 }
 class ListNode {
     int val;
     ListNode next;
     ListNode(int x) { val = x; next = null;} //构造函数
-	}
+}

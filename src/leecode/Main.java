@@ -9,16 +9,19 @@ public class Main {
 //		func1();
 //		func2();
 //		func3();
-		func4();
+//		func7();
+		func9();
 	}
+	private static solution solution = new solution();
+	
 	public static void func1(){
-		solution solu =new solution();
+//		solution solu =new solution();
 		
 		//No.1 两数之和
 		int nums[] = {2,7,11,15};
 		int target = 13;
-		solu.twoSum(nums, target);
-		System.out.println(solu.twoSum(nums, target)[1]);
+		solution.twoSum(nums, target);
+		System.out.println(solution.twoSum(nums, target)[1]);
 		
 	}
 	public static void func2(){
@@ -36,8 +39,8 @@ public class Main {
 		 ListNode l22 = new ListNode(9);l21.next = l22;
 	/*	 ListNode l23 = new ListNode(4);l22.next = l23;
 		 ListNode l24 = new ListNode(1);l23.next = l24;*/
-		 solution solu =new solution(); 
-		 ListNode l6 = solu.addTwoNumbers(l11, l21);
+//		 solution solu =new solution(); 
+		 ListNode l6 = solution.addTwoNumbers(l11, l21);
 		 while(l6 != null){
 			 System.out.println("value is "+ l6.val);
 			 l6 = l6.next;
@@ -45,14 +48,19 @@ public class Main {
 	}
 	public static void func3(){
 		String s = "pwwkew";
-		solution solution = new solution();
+//		solution solution = new solution();
 		System.out.println(solution.lengthOfLongestSubstring(s));
 	}
 	
-	public static void func4(){
-		int  a = 1534236469;
-		solution solution = new solution();
-		System.out.println(solution.reverse(a));
+	public static void func7(){
+		int  a = 1563847412;
+//		solution solution = new solution();
+		System.out.println(solution.reverse3(a));
 	}
+	public static void func9(){
+		int x = -12321;
+		System.out.println(solution.isPalindrome2(x));
+	}
+	
 
 }
