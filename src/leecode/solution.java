@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.print.attribute.standard.PrinterLocation;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 public class solution {
 	
@@ -319,6 +320,35 @@ public class solution {
     public Boolean isPalindrome2(int x){
     	StringBuilder s1 = new StringBuilder(x+"");
     	return s1.reverse().toString().equals(x+"");
+    }
+    
+    /*No.5 回文子串
+     * 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+		输入: "babad"
+		输出: "bab"
+		注意: "aba" 也是一个有效答案。
+		示例 2：
+		输入: "cbbd"
+		输出: "bb"
+     */
+    public String longestPalindrome(String s){
+//    	判断是否回文可以用StringBuilder 的 reverse计算。
+    	int len = s.length();
+    	int i =0 ;
+    	StringBuilder sb ;
+    	String result = "";
+    	while(i<s.length()){
+    		int j = i+1;
+    		while(j<=s.length()){
+    			sb = new StringBuilder(s.substring(i, j));
+    			if(sb.toString().equals(sb.reverse().toString())){ //回文了
+    				result = result.length()>sb.toString().length()?result:sb.toString();
+    			}
+    			j++;
+    		}
+    		i++;
+    	}
+    	return result;
     }
 }
 class ListNode {

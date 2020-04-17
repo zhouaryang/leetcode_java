@@ -10,7 +10,8 @@ public class Main {
 //		func2();
 //		func3();
 //		func7();
-		func9();
+//		func9();
+		func5();
 	}
 	private static solution solution = new solution();
 	
@@ -61,6 +62,12 @@ public class Main {
 		int x = -12321;
 		System.out.println(solution.isPalindrome2(x));
 	}
-	
+	public static void func5(){
+		String ss = "a";
+		System.out.println(solution.longestPalindrome(ss));
+		
+//		StringBuilder s = new StringBuilder("babad");
+//		System.out.println(s.toString().equals(s.reverse().toString()));
+	}
 
 }
