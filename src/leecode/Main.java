@@ -63,8 +63,8 @@ public class Main {
 		System.out.println(solution.isPalindrome2(x));
 	}
 	public static void func5(){
-		String ss = "a";
-		System.out.println(solution.longestPalindrome(ss));
+		String ss = "aaaaa";
+		System.out.println(solution.longestPalindrome2(ss));
 		
 //		StringBuilder s = new StringBuilder("babad");
 //		System.out.println(s.toString().equals(s.reverse().toString()));

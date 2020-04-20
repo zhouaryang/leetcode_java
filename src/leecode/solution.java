@@ -2,6 +2,7 @@ package leecode;
 
 import java.beans.IntrospectionException;
 import java.security.Key;
+import java.sql.Time;
 import java.util.FormatFlagsConversionMismatchException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +13,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.print.attribute.standard.PrinterLocation;
+import javax.swing.plaf.SliderUI;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 public class solution {
@@ -333,6 +335,7 @@ public class solution {
      */
     public String longestPalindrome(String s){
 //    	判断是否回文可以用StringBuilder 的 reverse计算。
+//    	time 超时
     	int len = s.length();
     	int i =0 ;
     	StringBuilder sb ;
@@ -349,6 +352,79 @@ public class solution {
     		i++;
     	}
     	return result;
+    }
+    
+    public String longestPalindrome2(String s){
+//    	动态规划 保存已求解子问题的结果
+//    	dp[i][j]表示第i到第j的子串是否为回文子串
+//    	初始化dp[i][j] =True;
+//    	递推公式 dp[i][j]=( dp[i+1][j-1]&&arr[i]==arr[j]) (i-j != +-1)
+//    	在构建dp数组的时候，要先遍历j，再遍历i，否则会出错。且构建dp数组的时候，顺便统计最长的回文长度
+//    	Time 33 room 15
+    	if(("").equals(s) || s.length() == 1){
+    		return s;
+    	}
+    	int length = s.length();
+    	int start = 0;
+    	int max_len = 1;
+    	boolean[][] dp= new boolean[length][length];
+    	for(int i=0 ; i<length;i++){
+    		dp[i][i] = true;
+    	}
+    	for(int i=0;i<length;i++){
+			for(int j=0;j<i;j++){ //反正只用一半的数组
+//				根据递推公式可知，相邻1个元素不满足公式，因为&&后面是恒等，所以单独考虑。
+				if(j+1==i&&s.charAt(j)==s.charAt(i)){ 
+					dp[j][i]=true;
+				}else{ 
+//					当这里i j 相差为2时
+					dp[j][i]=dp[j+1][i-1]&&s.charAt(i)==s.charAt(j);
+				}
+				if(dp[j][i]&&i-j+1>max_len){
+					max_len=i-j+1;//+1是为了截取字符串
+					start=j;
+				}
+
+			}
+		}
+    	String res=new String(s.toCharArray(),start,max_len);
+		return res;
+    	
+    }
+    public String longestPalindrome3(String s){
+    	//这个有问题
+    	if("".equals(s) || s.length() == 1){
+    		return s;
+    	}
+    	int len = s.length();
+    	int maxLen = 1;
+    	int start = 0; //记录最大子串起始位置
+    	boolean dp[][] = new boolean[len][len];
+    	for(int i = 0 ; i < len ; i++){
+    		dp[i][i] = true;
+    	}
+    	
+    	for(int i = 0 ; i< len;i++){
+    		for(int j= i+1; j < len ; j++){
+    			/*if(i == j){//分以下三种情况讨论，但是这里没有dp[i+1][i+1]的信息，下面第三个分支要使用，可以在这里预分配或者在外面统一赋值,这个时候有个坑，中间子串没保存到值
+    				dp[i][j] = true;
+    			}
+    			else */if(j == i+1){
+    				dp[i][j] = s.charAt(i)==s.charAt(j); 
+    			}
+    			else{
+    				dp[i][j] = dp[i+1][j-1]&&(s.charAt(i)==s.charAt(j));
+    			}
+    			if(dp[i][j]&&maxLen < j - i+1){ //在这里记录最大长度,如果i,j回文则记录 ,这里应该要用j-i+1,使用j-i
+    				maxLen = j - i+1;
+    				start = i;
+    			}
+    		}
+    		
+    	}
+    	String res = s.substring(start, start+maxLen);
+    	System.out.println(start+" "+maxLen);
+    	return res;
     }
 }
 class ListNode {
