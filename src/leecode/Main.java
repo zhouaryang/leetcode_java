@@ -1,6 +1,6 @@
 package leecode;
 
-import leecode.solution;
+import leecode.*;
 
 public class Main {
 

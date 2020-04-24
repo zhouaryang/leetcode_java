@@ -1,20 +1,11 @@
 package leecode;
 
-import java.beans.IntrospectionException;
-import java.security.Key;
-import java.sql.Time;
-import java.util.FormatFlagsConversionMismatchException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.print.attribute.standard.PrinterLocation;
-import javax.swing.plaf.SliderUI;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 public class solution {
 	
