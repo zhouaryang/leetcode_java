@@ -1,7 +1,9 @@
 package leecode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -179,79 +181,7 @@ public class solution {
     	}
     	return ans;
     }
-    /*No.7
-     * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
-     * In:132 Out:321
-     * In:-123 Out:-321
-     * In:120 Out:21
-     */
-    public int reverse(int x) {
-//    	实现比较烂 time 23 room 5,使用了stringBuffer做反转，应用了其append方法。
-//    	位数，符号，末尾0是三个关键点
-    	int len = 1,val = x ;
-    	while(x/10 != 0 ){
-    		x = x/10;
-    		len++;
-    	}
-    	boolean flag = val > 0 ? true:false; 
-    	if(!flag)val = -val;
-    	String s = Integer.toString(val);
-    	StringBuffer reString = new StringBuffer();
-    	for(int i=s.length()-1;i>=0;i--) reString.append(s.charAt(i));
-    	try{
-    		int result =Integer.parseInt(reString.toString());
-    		result = flag?result:-1*result;
-        	return result;
-    	}catch(NumberFormatException e){ //这里int溢出之后返回0
-    		return 0;
-    	}
-    	
-    }
     
-    public int reverse2(int x){
-    	//用hashmap试试，K-V存 位数，值，快速查找
-//    	time 15 room 5 感觉还不如上个
-    	Map<Integer,Integer> map = new HashMap<>();
-    	int i = 1; // 从1开始，去除最末尾
-    	int result = 0;//取最末尾
-    	while(x/10 != 0){
-    		map.put(i, x%10);
-    		i++;
-    		x = x/10;
-    	}
-    	map.put(i, x%10); //最高位加进来
-    	
-    	
-    	for(Integer key :map.keySet()){
-    		
-    		if(result >= Integer.MAX_VALUE ||result <= Integer.MIN_VALUE){
-    			return 0;
-    		}
-    		result += map.get(key)*Math.pow(10, i-(key));
-    		/*try{
-        		result += map.get(key)*Math.pow(10, i-(key));
-        	}catch(NumberFormatException e){
-        		return 0;
-        	}*/
-    	}
-//    	恶心，测试边界点
-    	System.out.println("int max :"+Integer.MAX_VALUE + " int min:"+Integer.MIN_VALUE);
-    	return result;
-    	
-    }
-    public int reverse3(int x){
-//    	time 100 room 5  因为用了long,所以空间大了
-    	int ans = 0; //判断int溢出用，如果是int，判断不了是否溢出
-    	
-    	while(x /10 != 0 || x%10 != 0){
-    		ans = ans*10 + (x%10);
-    		x /= 10;
-    	}
-    	if(ans >= Integer.MAX_VALUE || ans <= Integer.MIN_VALUE){
-    		return 0;
-    	}
-    	return (int)ans;
-    }
 //    bytedance 1
     public int findLoaction(char []ch,String s){
     	
@@ -286,34 +216,7 @@ public class solution {
     	return 0;
     }
     
-    /*No.9 
-     * 判断一个整数是否是回文数，回文数是指正序（从左到右）和倒序读都是一样的数
-     * 例如：121 true ; -121 false 10 false 
-     * 不要转为String来处理
-     */
-    public Boolean isPalindrome(int x){
-//    	time 26 room 5 感觉还是挺
-    	if(x < 0){
-    		return false;
-    	}
-    	int val = x , y = 0;
-    	while(val /10 != 0 || val %10 != 0){
-    		y = y*10 + val%10;
-    		val /= 10;
-    	}
-    	/*if(x != y){
-    		return false;
-    	}
-    	return true;*/
-    	return x==y ;
-    }
-//    转String 试试
-//    其中StringBuilder 提供了多种操作方法，append reverse等，最后通过toString转string
-//    time 9 room 5
-    public Boolean isPalindrome2(int x){
-    	StringBuilder s1 = new StringBuilder(x+"");
-    	return s1.reverse().toString().equals(x+"");
-    }
+    
     
     /*No.5 回文子串
      * 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
@@ -416,6 +319,181 @@ public class solution {
     	String res = s.substring(start, start+maxLen);
     	System.out.println(start+" "+maxLen);
     	return res;
+    }
+    /*No.6
+     * 将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
+		比如输入字符串为 "LEETCODEISHIRING" 行数为 3 时，排列如下：
+		L   C   I   R
+		E T O E S I I G
+		E   D   H   N
+		之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："LCIRETOESIIGEDHN"。
+		请你实现这个将字符串进行指定行数变换的函数：
+		string convert(string s, int numRows);
+		示例 1:
+		输入: s = "LEETCODEISHIRING", numRows = 3
+		输出: "LCIRETOESIIGEDHN"
+		示例 2:
+		输入: s = "LEETCODEISHIRING", numRows = 4
+		输出: "LDREOEIIECIHNTSG"
+		解释:
+		L     D     R
+		E   O E   I I
+		E C   I H   N
+		T     S     G
+     */
+//    关键点如何存 遍历一次找到元素最终位置。
+//    方法1.按行排序，这个+-1用的真精髓，确定了位置，还有使用字符串拼接的方式，非常方便。
+    public String convert(String s, int numRows) {
+    	if (numRows == 1) return s;
+
+        List<StringBuilder> rows = new ArrayList<>();
+        for (int i = 0; i < Math.min(numRows, s.length()); i++)
+            rows.add(new StringBuilder());
+
+        int curRow = 0;
+        boolean goingDown = false;
+
+        for (char c : s.toCharArray()) {
+            rows.get(curRow).append(c);
+            if (curRow == 0 || curRow == numRows - 1) goingDown = !goingDown;
+            curRow += goingDown ? 1 : -1;
+        }
+
+        StringBuilder ret = new StringBuilder();
+        for (StringBuilder row : rows) ret.append(row);
+        return ret.toString();
+    }
+    
+//    time 18 room 8
+    public String convert2(String s, int numRows){
+    	if(numRows == 1){
+    		return s;
+    	}
+    	int length = s.length();
+    	List<String> list = new ArrayList<>();
+//    	list的长度取决与numRows,但是存在s短的情况
+    	int line = Math.min(length,numRows);
+    	for(int i = 0; i < line; i++){
+    		list.add("");
+    	}
+    	boolean flag = false;
+    	char[] ch = s.toCharArray();
+    	int currIndex = 0;//这个表示指向list的位置，Z字行到两头之后转向
+    	for(char c: ch){
+    		list.set(currIndex, list.get(currIndex)+c);
+    		if(currIndex == 0 || currIndex == numRows -1){//首尾换向,注意第一次会转向，巧妙使用初始值
+    			flag = !flag;
+    		}
+    		currIndex += flag?1:-1;
+    	}
+    	String reString ="";
+    	for(String ss:list){
+    		reString += ss;
+    	}
+    	return reString;
+    }
+    
+    /*No.7
+     * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
+     * In:132 Out:321
+     * In:-123 Out:-321
+     * In:120 Out:21
+     */
+    public int reverse(int x) {
+//    	实现比较烂 time 23 room 5,使用了stringBuffer做反转，应用了其append方法。
+//    	位数，符号，末尾0是三个关键点
+    	int len = 1,val = x ;
+    	while(x/10 != 0 ){
+    		x = x/10;
+    		len++;
+    	}
+    	boolean flag = val > 0 ? true:false; 
+    	if(!flag)val = -val;
+    	String s = Integer.toString(val);
+    	StringBuffer reString = new StringBuffer();
+    	for(int i=s.length()-1;i>=0;i--) reString.append(s.charAt(i));
+    	try{
+    		int result =Integer.parseInt(reString.toString());
+    		result = flag?result:-1*result;
+        	return result;
+    	}catch(NumberFormatException e){ //这里int溢出之后返回0
+    		return 0;
+    	}
+    	
+    }
+    
+    public int reverse2(int x){
+    	//用hashmap试试，K-V存 位数，值，快速查找
+//    	time 15 room 5 感觉还不如上个
+    	Map<Integer,Integer> map = new HashMap<>();
+    	int i = 1; // 从1开始，去除最末尾
+    	int result = 0;//取最末尾
+    	while(x/10 != 0){
+    		map.put(i, x%10);
+    		i++;
+    		x = x/10;
+    	}
+    	map.put(i, x%10); //最高位加进来
+    	
+    	
+    	for(Integer key :map.keySet()){
+    		
+    		if(result >= Integer.MAX_VALUE ||result <= Integer.MIN_VALUE){
+    			return 0;
+    		}
+    		result += map.get(key)*Math.pow(10, i-(key));
+    		/*try{
+        		result += map.get(key)*Math.pow(10, i-(key));
+        	}catch(NumberFormatException e){
+        		return 0;
+        	}*/
+    	}
+//    	恶心，测试边界点
+    	System.out.println("int max :"+Integer.MAX_VALUE + " int min:"+Integer.MIN_VALUE);
+    	return result;
+    	
+    }
+    public int reverse3(int x){
+//    	time 100 room 5  因为用了long,所以空间大了
+    	int ans = 0; //判断int溢出用，如果是int，判断不了是否溢出
+    	
+    	while(x /10 != 0 || x%10 != 0){
+    		ans = ans*10 + (x%10);
+    		x /= 10;
+    	}
+    	if(ans >= Integer.MAX_VALUE || ans <= Integer.MIN_VALUE){
+    		return 0;
+    	}
+    	return (int)ans;
+    }
+    
+    /*No.9 
+     * 判断一个整数是否是回文数，回文数是指正序（从左到右）和倒序读都是一样的数
+     * 例如：121 true ; -121 false 10 false 
+     * 不要转为String来处理
+     */
+    public Boolean isPalindrome(int x){
+//    	time 26 room 5 感觉还是挺
+    	if(x < 0){
+    		return false;
+    	}
+    	int val = x , y = 0;
+    	while(val /10 != 0 || val %10 != 0){
+    		y = y*10 + val%10;
+    		val /= 10;
+    	}
+    	/*if(x != y){
+    		return false;
+    	}
+    	return true;*/
+    	return x==y ;
+    }
+//    转String 试试
+//    其中StringBuilder 提供了多种操作方法，append reverse等，最后通过toString转string
+//    time 9 room 5
+    public Boolean isPalindrome2(int x){
+    	StringBuilder s1 = new StringBuilder(x+"");
+    	return s1.reverse().toString().equals(x+"");
     }
 }
 class ListNode {

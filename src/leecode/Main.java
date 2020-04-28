@@ -11,7 +11,8 @@ public class Main {
 //		func3();
 //		func7();
 //		func9();
-		func5();
+//		func5();
+		func6();
 	}
 	private static solution solution = new solution();
 	
@@ -53,6 +54,18 @@ public class Main {
 		System.out.println(solution.lengthOfLongestSubstring(s));
 	}
 	
+	public static void func5(){
+		String ss = "aaaaa";
+		System.out.println(solution.longestPalindrome2(ss));
+		
+//		StringBuilder s = new StringBuilder("babad");
+//		System.out.println(s.toString().equals(s.reverse().toString()));
+	}
+	public static void func6(){
+		String ss = "ABCDEFGHIGKLMN";
+		System.out.println(solution.convert2(ss, 3));
+	}
+	
 	public static void func7(){
 		int  a = 1563847412;
 //		solution solution = new solution();
@@ -62,12 +75,5 @@ public class Main {
 		int x = -12321;
 		System.out.println(solution.isPalindrome2(x));
 	}
-	public static void func5(){
-		String ss = "aaaaa";
-		System.out.println(solution.longestPalindrome2(ss));
-		
-//		StringBuilder s = new StringBuilder("babad");
-//		System.out.println(s.toString().equals(s.reverse().toString()));
-	}
-
+	
 }
