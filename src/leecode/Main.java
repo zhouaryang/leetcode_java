@@ -63,7 +63,7 @@ public class Main {
 	}
 	public static void func6(){
 		String ss = "ABCDEFGHIGKLMN";
-		System.out.println(solution.convert2(ss, 3));
+		System.out.println(solution.convert3(ss, 3));
 	}
 	
 	public static void func7(){

@@ -343,6 +343,7 @@ public class solution {
      */
 //    关键点如何存 遍历一次找到元素最终位置。
 //    方法1.按行排序，这个+-1用的真精髓，确定了位置，还有使用字符串拼接的方式，非常方便。
+//    time 76 room 8
     public String convert(String s, int numRows) {
     	if (numRows == 1) return s;
 
@@ -364,7 +365,7 @@ public class solution {
         return ret.toString();
     }
     
-//    time 18 room 8
+//    time 22 room 8, 
     public String convert2(String s, int numRows){
     	if(numRows == 1){
     		return s;
@@ -377,10 +378,10 @@ public class solution {
     		list.add("");
     	}
     	boolean flag = false;
-    	char[] ch = s.toCharArray();
+//    	char[] ch = s.toCharArray(); //在这里也会多加耗时
     	int currIndex = 0;//这个表示指向list的位置，Z字行到两头之后转向
-    	for(char c: ch){
-    		list.set(currIndex, list.get(currIndex)+c);
+    	for(char c: s.toCharArray()){
+    		list.set(currIndex, list.get(currIndex)+c);//这里耗时，对list的操作
     		if(currIndex == 0 || currIndex == numRows -1){//首尾换向,注意第一次会转向，巧妙使用初始值
     			flag = !flag;
     		}
@@ -391,6 +392,24 @@ public class solution {
     		reString += ss;
     	}
     	return reString;
+    }
+//    按行访问
+    public String convert3(String s, int numRows){
+    	
+    	if(numRows == 1) return s;
+    	StringBuilder ret = new StringBuilder();
+        int n = s.length();
+        int cycleLen = 2 * numRows - 2;
+
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j + i < n; j += cycleLen) {
+                ret.append(s.charAt(j + i));
+                if (i != 0 && i != numRows - 1 && j + cycleLen - i < n)
+                    ret.append(s.charAt(j + cycleLen - i));
+            }
+        }
+    	
+    	return null;
     }
     
     /*No.7
