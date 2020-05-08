@@ -12,7 +12,8 @@ public class Main {
 //		func7();
 //		func9();
 //		func5();
-		func6();
+//		func6();
+		func13();
 	}
 	private static solution solution = new solution();
 	
@@ -74,6 +75,11 @@ public class Main {
 	public static void func9(){
 		int x = -12321;
 		System.out.println(solution.isPalindrome2(x));
+	}
+	
+	public static void func13(){
+		String s = "LVIII";
+		System.out.print(solution.romanToInt(s));
 	}
 	
 }

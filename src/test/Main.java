@@ -12,9 +12,16 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 //		序列化对象
-		Serializable();
+//		Serializable();
 //		反序列化
-		DesSerializable();
+//		DesSerializable();
+//		测试CPU占满
+		try {
+			testCPULoop();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void Serializable(){
@@ -60,4 +67,26 @@ public class Main {
 		System.out.println("SSN: " + e.SSN);
 	    System.out.println("Number: " + e.number);
 	}
+	
+//	@GetMapping("/cpu/loop")
+    public static void testCPULoop() throws InterruptedException {
+        System.out.println("请求cpu死循环");
+        Thread.currentThread().setName("loop-thread-cpu");
+        int num = 0;
+        while (true) {
+            num++;
+            if (num == Integer.MAX_VALUE) {
+                System.out.println("reset");
+            }
+            num = 0;
+        }
+
+    }
+    
+    public String leak() {
+        System.out.println("模拟内存泄漏");
+        ThreadLocal<Byte[]> localVariable = new ThreadLocal<Byte[]>();
+        localVariable.set(new Byte[4096 * 1024]);// 为线程添加变量
+        return "ok";
+    }
 }
