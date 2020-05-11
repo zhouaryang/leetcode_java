@@ -13,7 +13,13 @@ public class Main {
 //		func9();
 //		func5();
 //		func6();
-		func13();
+//		func13();
+		
+		
+		        //Scanner in = new Scanner(System.in);
+		        //int a = in.nextInt();
+		        //System.out.println(a);
+		       
 	}
 	private static solution solution = new solution();
 	
@@ -83,3 +89,15 @@ public class Main {
 	}
 	
 }
+class Node{
+	   public Node(){
+	       
+	   }
+	    public Node(int value){
+	        this.val = value;
+	        this.next = null;
+	    }
+	   public  int val;
+	   public  Node next;
+	   
+	}

@@ -1,4 +1,4 @@
-package test;
+package test.resource;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StringBufferInputStream;
 
 public class Main {
 
@@ -16,12 +17,14 @@ public class Main {
 //		反序列化
 //		DesSerializable();
 //		测试CPU占满
-		try {
+/*		try {
 			testCPULoop();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		
+		StringTest();
 	}
 	
 	public static void Serializable(){
@@ -88,5 +91,21 @@ public class Main {
         ThreadLocal<Byte[]> localVariable = new ThreadLocal<Byte[]>();
         localVariable.set(new Byte[4096 * 1024]);// 为线程添加变量
         return "ok";
+    }
+    
+    public static void StringTest(){
+    	String s1 = "hello";
+        String s2 = "world";
+        String s3 = "helloworld";
+        String s4 = s1+s2;
+        String s5 = "helloworld";
+        String s6 = new String("helloworld");
+        System.out.println(s3==s4);
+        System.out.println(s3.hashCode());
+        System.out.println(s4.hashCode());
+        System.out.println(System.identityHashCode(s3));
+        System.out.println(System.identityHashCode(s4));
+        System.out.println(System.identityHashCode(s5));
+        System.out.println(System.identityHashCode(s6));
     }
 }
