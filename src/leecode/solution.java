@@ -597,6 +597,7 @@ public class solution {
 		例如
      * ["dog","racecar","car"]
      */
+//    time 5 room 5 ,so low
     public String longestCommonPrefix(String[] strs){
 //    	不要一个字符一个字符去考虑，应该整体考虑
 //    	令子串初始值为第一个字符串，然后依次找公共子串，找不到则返回空。
@@ -625,6 +626,11 @@ public class solution {
     		return null;
     	}
     	return ans;
+    }
+//    
+    public String longestCommonPrefix2(String[] args){
+    	
+    	return null;
     }
 }
 class ListNode {
