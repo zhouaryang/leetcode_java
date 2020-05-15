@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import org.omg.CORBA.portable.ValueInputStream;
 
 import java.util.Set;
@@ -592,13 +594,37 @@ public class solution {
 		输入: ["dog","racecar","car"]
 		输出: ""
 		解释: 输入不存在公共前缀。
-     * 
+		例如
+     * ["dog","racecar","car"]
      */
     public String longestCommonPrefix(String[] strs){
-    	for(int i=0 ; i< strs.length ;i++){
-    		
+//    	不要一个字符一个字符去考虑，应该整体考虑
+//    	令子串初始值为第一个字符串，然后依次找公共子串，找不到则返回空。
+    	if(strs.length ==0)
+    		return "";
+    	String subStr = strs[0];
+//    	现在挨个找公共子串，类似一趟冒泡，最终找到的则为公共子串
+    	for(int i = 1; i < strs.length ; i++){
+    		subStr = pubString(subStr, strs[i]);
     	}
-    	return null;	
+    	return subStr;
+    }
+    public String pubString(String s1,String s2){
+    	if(s1 == null || s2 == null){
+    		return null;
+    	}
+    	String ans = "";
+    	for(int i = 0 ; i < s1.length()&&i<s2.length(); i++){
+    		if(s1.charAt(i) == s2.charAt(i))
+    			ans += s1.charAt(i);
+    		else{
+        		break;
+    		}
+    	}
+    	if(ans.equals("")){
+    		return null;
+    	}
+    	return ans;
     }
 }
 class ListNode {

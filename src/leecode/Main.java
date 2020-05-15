@@ -1,5 +1,7 @@
 package leecode;
 
+import java.awt.datatransfer.StringSelection;
+
 import leecode.*;
 
 public class Main {
@@ -14,11 +16,7 @@ public class Main {
 //		func5();
 //		func6();
 //		func13();
-		
-		
-		        //Scanner in = new Scanner(System.in);
-		        //int a = in.nextInt();
-		        //System.out.println(a);
+		func14();
 		       
 	}
 	private static solution solution = new solution();
@@ -86,6 +84,11 @@ public class Main {
 	public static void func13(){
 		String s = "LVIII";
 		System.out.print(solution.romanToInt(s));
+	}
+	public static void func14(){
+		String strs[] = {"flower","flow","flight"};
+		String strs2[] = {"dog","racecar","car"};
+		System.out.println(solution.longestCommonPrefix(strs2));
 	}
 	
 }

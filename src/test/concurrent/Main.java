@@ -11,15 +11,15 @@ public class Main {
 //		pool.scheduledThreadPool();
 		testThreadLocal();
 	}
-	ThreadLocalTest aLocalTest = new ThreadLocalTest();
+//	ThreadLocalTest aLocalTest = new ThreadLocalTest();
 	
 	
 	public static void testThreadLocal(){
 		
 //		main中调用非静态方法，先new一个对象即可
 		Main m = new Main();
-		m.aLocalTest.test();
-		System.out.println(m.aLocalTest.user);
+//		m.aLocalTest.test();
+//		System.out.println(m.aLocalTest.user);
 	}
 	
 }

@@ -3,6 +3,11 @@ package test.concurrent;
 import java.io.ObjectInputStream.GetField;
 import java.util.Random;
 
+/*
+ * @desc Java ThreadLocal test
+ * @time 2020-5-12
+ * @author zhouaryang
+ */
 public class ThreadLocalDemo implements Runnable{
 
 	private final static ThreadLocal<People> threadlocal = new ThreadLocal<>();
