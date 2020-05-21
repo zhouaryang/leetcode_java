@@ -30,7 +30,7 @@ public class ThreadPool {
 //		将线程加入池 并执行
 		pool.execute(t1);
 		pool.execute(t2);
-		t1.start();
+//		t1.start();
 //		关闭线程池
 		pool.shutdown();
 	}

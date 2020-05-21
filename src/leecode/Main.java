@@ -12,11 +12,14 @@ public class Main {
 //		func2();
 //		func3();
 //		func7();
+//		func8();
 //		func9();
 //		func5();
 //		func6();
+		func11();
 //		func13();
-		func14();
+//		func14();
+		
 		       
 	}
 	private static solution solution = new solution();
@@ -89,6 +92,18 @@ public class Main {
 		String strs[] = {"flower","flow","flight"};
 		String strs2[] = {"dog","racecar","car"};
 		System.out.println(solution.longestCommonPrefix(strs2));
+	}
+	public static void func8(){
+		String s1 = "   -234"; //-234
+		String s2 = "words and 987"; // 0
+		String s3 = "4193 with words1"; // 4193
+		String s4 = "-91283472332";
+		String s5 = "20000000000000000000";
+		System.out.println(solution.myAtoi(s5));
+	}
+	public static void func11(){
+		int a[] = {1,8,6,2,5,4,8,3,7};
+		System.out.println(solution.maxArea2(a));
 	}
 	
 }

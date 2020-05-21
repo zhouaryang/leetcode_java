@@ -1,5 +1,7 @@
 package leecode;
 
+import java.io.PushbackInputStream;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import java.util.Map.Entry;
 import javax.naming.spi.DirStateFactory.Result;
 
 import org.omg.CORBA.portable.ValueInputStream;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import java.util.Set;
 
@@ -491,6 +494,59 @@ public class solution {
     	return (int)ans;
     }
     
+    
+    /*
+     * No.8 字符串转整数 atoi
+     * 
+     */// tiem : room:
+    public int myAtoi(String str){
+//    	遍历一遍先把数字和负号挑出来
+    	if(str == null || ("").equals(str) || str.equals("-")|| str.equals("+")){
+    		return 0;
+    	}
+    	StringBuilder sb = new StringBuilder();
+    	char c ; int num = 0;boolean firstChar = true; boolean lastChar = true;
+    	
+    	for(int i = 0 ; i < str.length() && lastChar; i++){
+    		c = str.charAt(i); 
+    		num = (int)c - 48;
+    		if(firstChar){
+    			if(c == ' ')//这种丢弃
+    				continue;
+    			if(!(c == '+'||c == '-' || (num>=0 && num<10 )) ) //这些是不允许在前面出现的，
+    				return 0;
+    		}
+    		if(c == '+' ||c == '-' || (num>=0 && num<10 )){
+    			sb.append(c);lastChar = true;firstChar=false;
+    		}else{
+    			lastChar = false;
+    		}
+    		
+    	}
+    	try{
+    		if(Long.parseLong(sb.toString())>Integer.MAX_VALUE ){ //这里加入string转long异常时逻辑错误，应该输出maxint,而不是0.
+        		return Integer.MAX_VALUE;
+        	}else if(Long.parseLong(sb.toString())< Integer.MIN_VALUE){
+        		return Integer.MIN_VALUE;
+        	}
+        	return Integer.parseInt(sb.toString());
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    		return 0;
+    	}
+    	/*if(sb.toString().trim().isEmpty())
+    		return 0;
+    	if(Long.parseLong(sb.toString())>Integer.MAX_VALUE ){
+    		return Integer.MAX_VALUE;
+    	}else if(Long.parseLong(sb.toString())< Integer.MIN_VALUE){
+    		return Integer.MIN_VALUE;
+    	}
+    	return Integer.parseInt(sb.toString());*/
+    }
+    
+    
+    
     /*No.9 
      * 判断一个整数是否是回文数，回文数是指正序（从左到右）和倒序读都是一样的数
      * 例如：121 true ; -121 false 10 false 
@@ -519,6 +575,40 @@ public class solution {
     	StringBuilder s1 = new StringBuilder(x+"");
     	return s1.reverse().toString().equals(x+"");
     }
+    
+    /* No.11
+     * @desc:给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 
+     * 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+     */
+    public int maxArea(int[] height) {
+    	if(height.length <2)//0 1 非法
+    		return 0;
+    	//暴力解法先来探探路 time 13 room 40 一次ace
+    	int maxArea = 0;
+    	for(int i = 0 ; i< height.length -1 ; i++){
+    		for(int j = i+1 ; j < height.length ; j++){
+    			maxArea =Math.max(Math.min(height[i],height[j])*(j-i),maxArea);
+    		}
+    	}
+    	return maxArea;
+    }
+//    双指针法：time O(n) room O(1) time:73 room:57 (4ms 39.7MB)
+    public int maxArea2(int[] height){
+    	 int l = 0, r = height.length - 1;
+         int ans = 0;
+         while (l < r) {
+             int area = Math.min(height[l], height[r]) * (r - l);
+             ans = Math.max(ans, area);
+             if (height[l] <= height[r]) { //你要找最大值，当然每次保留大的，移动小的那个指针，
+                 ++l;
+             }
+             else {
+                 --r;
+             }
+         }
+         return ans;
+    }
+    
     /* No.13
      * 罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
      * 字符          数值
@@ -627,10 +717,16 @@ public class solution {
     	}
     	return ans;
     }
-//    
-    public String longestCommonPrefix2(String[] args){
-    	
-    	return null;
+//  
+    public String longestCommonPrefix2(String[] strs){
+    	if (strs.length == 0) return "";
+    	   String prefix = strs[0];
+    	   for (int i = 1; i < strs.length; i++)
+    	       while (strs[i].indexOf(prefix) != 0) {
+    	           prefix = prefix.substring(0, prefix.length() - 1);
+    	           if (prefix.isEmpty()) return "";
+    	       }        
+    	   return prefix;
     }
 }
 class ListNode {
