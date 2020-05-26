@@ -15,6 +15,7 @@ import org.omg.CORBA.portable.ValueInputStream;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import java.util.Set;
+import java.util.Stack;
 
 
 public class solution {
@@ -497,7 +498,7 @@ public class solution {
     
     /*
      * No.8 字符串转整数 atoi
-     * 
+     * 状态机：
      */// tiem : room:
     public int myAtoi(String str){
 //    	遍历一遍先把数字和负号挑出来
@@ -575,6 +576,23 @@ public class solution {
     	StringBuilder s1 = new StringBuilder(x+"");
     	return s1.reverse().toString().equals(x+"");
     }
+    
+    /*No 10 正则表达式匹配
+
+     * 给你一个字符串s和一个字符规律p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
+		'.' 匹配任意单个字符
+		'*' 匹配零个或多个前面的那一个元素
+		所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。
+		s 可能为空，且只包含从 a-z 的小写字母。
+		p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *。
+     */
+    public boolean isMatch(String s, String p){
+    	
+    	return true;
+    }
+    
+    
+    
     
     /* No.11
      * @desc:给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 
@@ -727,6 +745,49 @@ public class solution {
     	           if (prefix.isEmpty()) return "";
     	       }        
     	   return prefix;
+    }
+    
+   /*No 20  括号匹配
+    * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+
+	有效字符串需满足：
+	
+	左括号必须用相同类型的右括号闭合。
+	左括号必须以正确的顺序闭合。
+	注意空字符串可被认为是有效字符串。
+    * 
+    */ // Time 84 room 5 额外使用了一个栈
+    public boolean isValid2(String s) {
+//    	解法，左括号入栈，右括号判断匹配则出战，不匹配失败，最后看栈中是否有元素。
+    	Stack<Character> stack = new Stack<>();
+    	for(int i = 0 ; i< s.length() ; i++){
+    		if(s.charAt(i) == '{' ||s.charAt(i) == '['||s.charAt(i) == '('){
+    			stack.push(s.charAt(i));
+    		}else if(stack.size() == 0){
+    			return false;
+    		}else if(stack.peek() == '('){
+    			if(')' != s.charAt(i)) return false;
+    			stack.pop();
+    		}else if(stack.peek() == '{'){
+    			if('}' != s.charAt(i)) return false;
+    			stack.pop();
+    		}else if(stack.peek() == '['){
+    			if(']' != s.charAt(i)) return false;
+    			stack.pop();
+    		}
+    	}
+    	if(stack.size() == 0){
+    		return true;
+    	}
+    	return false;
+    }
+//    time 5 room 5 ,递归，很耗时的
+    public boolean isValid(String s){
+    	if(s.contains("()") || s.contains("{}") || s.contains("[]")){
+    		return isValid(s.replace("()", "").replace("{}", "").replace("[]", ""));
+    	}else{
+    		return "".equals(s);
+    	}
     }
 }
 class ListNode {

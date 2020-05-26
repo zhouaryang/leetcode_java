@@ -16,9 +16,10 @@ public class Main {
 //		func9();
 //		func5();
 //		func6();
-		func11();
+//		func11();
 //		func13();
 //		func14();
+		func20();
 		
 		       
 	}
@@ -104,6 +105,10 @@ public class Main {
 	public static void func11(){
 		int a[] = {1,8,6,2,5,4,8,3,7};
 		System.out.println(solution.maxArea2(a));
+	}
+	public static void func20(){
+		String s = "()";
+		System.out.println(solution.isValid(s));
 	}
 	
 }
