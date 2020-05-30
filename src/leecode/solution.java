@@ -627,6 +627,16 @@ public class solution {
          return ans;
     }
     
+    /*No .12 整数转roma数字
+     * I 1;V  5 ;X 10; L  50; C  100; D  500; M  1000
+     */
+    public String intToRoman(int num) {
+    	Map<Integer, String > map = new HashMap<>();
+    	map.put(1, "I");map.put(5, "V");map.put(10, "X");map.put(50, "L");
+    	map.put(100, "C");map.put(500, "D");map.put(1000, "M");
+    	return "";
+    }
+    
     /* No.13
      * 罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
      * 字符          数值
