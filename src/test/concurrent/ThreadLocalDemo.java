@@ -39,12 +39,10 @@ public class ThreadLocalDemo implements Runnable{
 	      people.setAge(age);
 	      System.out.println("thread " + currentThreadName + " first read age is:"
 	            + people.getAge());
-	      try
-	      {
+	      try {
 	         Thread.sleep(500);
 	      }
-	      catch (InterruptedException ex)
-	      {
+	      catch (InterruptedException ex){
 	         ex.printStackTrace();
 	      }
 	      System.out.println("thread " + currentThreadName + " second read age is:"

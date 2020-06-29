@@ -1,8 +1,8 @@
-package leecode;
+package leetcode;
 
 import java.awt.datatransfer.StringSelection;
 
-import leecode.*;
+import leetcode.*;
 
 public class Main {
 
@@ -19,11 +19,15 @@ public class Main {
 //		func11();
 //		func13();
 //		func14();
-		func20();
+//		func20();
+//		func21();
+		func4();
 		
-		       
+//		funcExtra1();  
+//		funExtra2();
 	}
 	private static solution solution = new solution();
+	private static SolutionExtra extra = new SolutionExtra();
 	
 	public static void func1(){
 //		solution solu =new solution();
@@ -109,6 +113,35 @@ public class Main {
 	public static void func20(){
 		String s = "()";
 		System.out.println(solution.isValid(s));
+	}
+	public static void func21(){
+		ListNode l11 = new ListNode(1);
+		ListNode l12 = new ListNode(2);l11.next =l12;
+		ListNode l13 = new ListNode(4);l12.next =l13;
+		 
+		ListNode l21 = new ListNode(1);
+		ListNode l22 = new ListNode(3);l21.next = l22;
+		ListNode l23 = new ListNode(4);l22.next = l23;
+		ListNode l6 = solution.mergeTwoLists2(l11, l21);
+		while(l6 != null){
+			 System.out.println("value is "+ l6.val);
+			 l6 = l6.next;
+		 }
+	}
+	private static void funcExtra1(){
+		int value[] = {1,2,5,-7,8,-10};
+		System.out.println(extra.getMax(value));
+	}
+	private static void funExtra2(){
+		solution.getSubArray();
+//		solution.func3();
+	}
+	
+	private static void func4(){
+		int nums1[] = {1,3,4};
+		int nums2[] = {2,4,6,7};
+		
+		System.out.println(solution.findMedianSortedArrays(nums1, nums2));
 	}
 	
 }

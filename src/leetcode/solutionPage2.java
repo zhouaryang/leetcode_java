@@ -1,4 +1,4 @@
-package leecode;
+package leetcode;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class solutionPage2 {
 		return list;
 	}
 	public void enQue(TreeNode node,List<Integer> queue){
-		
+		//那种遍历就在这里用顺寻决定，根节点位置作为依据
 		if(node.left != null){
 			enQue(node.left, queue);
 		}
